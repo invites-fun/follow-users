@@ -46,6 +46,12 @@ class SendNotificationWhenFollowerPosted implements ShouldQueue
 
         $discussion = $this->post->discussion;
 
+        $isPrivate = $discussion->recipientUsers()->exists() || $discussion->recipientGroups()->exists();
+
+        if ($isPrivate) {
+            return;
+        }
+
         $actor = $this->post->user;
         /**
          * @var Collection

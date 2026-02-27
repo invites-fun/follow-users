@@ -45,6 +45,12 @@ class SendNotificationWhenDiscussionIsStarted implements ShouldQueue
             return;
         }
 
+        $isPrivate = $this->discussion->recipientUsers()->exists() || $this->discussion->recipientGroups()->exists();
+
+        if ($isPrivate) {
+            return;
+        }
+
         /**
          * @var Collection
          */
